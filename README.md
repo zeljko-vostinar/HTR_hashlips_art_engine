@@ -6,10 +6,10 @@
 
 All the code in these repos was created and explained by HashLips on the main YouTube channel.
 
-I added some HTR (https://hathor.network/) functionality.
+I mainly added some HTR (https://hathor.network/) functionality.
 
-To find out more please visit:
-
+## To find out more please visit:
+### Hashlip Socials
 [📺 YouTube](https://www.youtube.com/channel/UC1LV4_VQGBJHTJjEWUmy8nA)
 
 [👄 Discord](https://discord.com/invite/qh6MWhMJDN)
@@ -19,6 +19,10 @@ To find out more please visit:
 [🐦 Twitter](https://twitter.com/hashlipsnft)
 
 [ℹ️ Website](https://hashlips.online/HashLips)
+
+### My Socials
+
+[🐦 Twitter](https://twitter.com/zeljko_vostinar)
 
 # HashLips Art Engine 🔥
 
@@ -45,6 +49,17 @@ Alternatively you can run this command if you have node installed.
 ```sh
 npm install
 ```
+## HTR-Configuration
+### This is still WIP, so let me know if you encounter any issues
+All you have to do, to enable HTR-Metadata generation is to simply open up your `config.js` and change the `const network` parameter on line 5 to `= NETWORK.htr`.
+
+It should look something like this: `const network = NETWORK.htr;`
+
+Now you can just follow the hashlips guides / tutorials and it should work just fine. You should have all the features and all the functionality of hashlips but with HTR-Metadata.
+
+There is one command that doesn't work yet because I haven't gotten to it yet: `npm run generate_metadata`
+
+If you need any further assistance regarding HTR-Metadata, please be sure to let me know! Just DM on [Twitter](https://twitter.com/zeljko_vostinar).
 
 ## Usage ℹ️
 

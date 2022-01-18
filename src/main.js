@@ -164,16 +164,34 @@ const addMetadata = (_dna, _edition) => {
       },
     };
   }
+  if (network == NETWORK.htr) {
+    tempMetadata = {
+      name: `${namePrefix} #${_edition}`,
+      description: description,
+      file: `${baseUri}/${_edition}.png`,
+      edition: _edition,
+      ...extraMetadata,
+      attributes: attributesList,
+    };
+  }
   metadataList.push(tempMetadata);
   attributesList = [];
 };
 
 const addAttributes = (_element) => {
   let selectedElement = _element.layer.selectedElement;
+
+ // We have to rename "trait_type" to "type" for HTR
+ if(network == NETWORK.htr) {
   attributesList.push({
-    trait_type: _element.layer.name,
-    value: selectedElement.name,
-  });
+    type: _element.layer.name,
+    value: selectedElement.name, });
+}
+else {
+attributesList.push({
+  trait_type: _element.layer.name,
+  value: selectedElement.name, });
+}
 };
 
 const loadLayerImg = async (_layer) => {
@@ -307,10 +325,25 @@ const saveMetaDataSingleFile = (_editionCount) => {
         `Writing metadata for ${_editionCount}: ${JSON.stringify(metadata)}`
       )
     : null;
-  fs.writeFileSync(
-    `${buildDir}/json/${_editionCount}.json`,
-    JSON.stringify(metadata, null, 2)
-  );
+
+    // Hashlips relies on the "edition" parameter. However we don't want it in our final HTR .json file.
+    // With this, hashlips can still internally use the "edition" variable but will simply not write it into our final HTR .json file.
+    if(network == NETWORK.htr)
+    { 
+      fs.writeFileSync(
+      `${buildDir}/json/${_editionCount}.json`,
+      JSON.stringify(metadata, function(key, val) 
+      {
+      if (key !== "edition") return val;
+      key = "type";
+      }, 2))
+    }
+
+    else 
+    {
+      fs.writeFileSync(`${buildDir}/json/${_editionCount}.json`,
+      JSON.stringify(metadata, null, 2))
+    }
 };
 
 function shuffle(array) {
@@ -333,7 +366,7 @@ const startCreating = async () => {
   let failedCount = 0;
   let abstractedIndexes = [];
   for (
-    let i = network == NETWORK.sol ? 0 : 1;
+    let i = network == NETWORK.sol || NETWORK.htr ? 0 : 1;
     i <= layerConfigurations[layerConfigurations.length - 1].growEditionSizeTo;
     i++
   ) {

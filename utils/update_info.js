@@ -19,21 +19,34 @@ data.forEach((item) => {
     item.name = `${namePrefix} #${item.edition}`;
     item.description = description;
     item.creators = solanaMetadata.creators;
-  } else {
+    fs.writeFileSync(
+      `${basePath}/build/json/${item.edition}.json`,
+      JSON.stringify(item, null, 2)
+    );
+  } 
+
+  if(network == NETWORK.htr){
+    item.name = `${namePrefix} #${item.edition}`;
+    item.description = description;
+    item.file = `${baseUri}/${item.edition}.png`;
+    fs.writeFileSync(
+      `${basePath}/build/json/${item.edition}.json`,
+      JSON.stringify(item, function(key, val) 
+      {
+      if (key !== "edition") return val;
+      }, 2))
+  } 
+  
+  else {
     item.name = `${namePrefix} #${item.edition}`;
     item.description = description;
     item.image = `${baseUri}/${item.edition}.png`;
+    fs.writeFileSync(
+      `${basePath}/build/json/${item.edition}.json`,
+      JSON.stringify(item, null, 2)
+    );
   }
-  fs.writeFileSync(
-    `${basePath}/build/json/${item.edition}.json`,
-    JSON.stringify(item, null, 2)
-  );
 });
-
-fs.writeFileSync(
-  `${basePath}/build/json/_metadata.json`,
-  JSON.stringify(data, null, 2)
-);
 
 if (network == NETWORK.sol) {
   console.log(`Updated description for images to ===> ${description}`);

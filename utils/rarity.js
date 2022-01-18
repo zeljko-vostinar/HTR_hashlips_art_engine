@@ -46,10 +46,10 @@ layerConfigurations.forEach((config) => {
 data.forEach((element) => {
   let attributes = element.attributes;
   attributes.forEach((attribute) => {
+    let type = attribute.type; // We have to check for "type" instead of "trait_type" because we renamed it.
     let traitType = attribute.trait_type;
     let value = attribute.value;
-
-    let rarityDataTraits = rarityData[traitType];
+    let rarityDataTraits = rarityData[traitType, type];
     rarityDataTraits.forEach((rarityDataTrait) => {
       if (rarityDataTrait.trait == value) {
         // keep track of occurrences

@@ -4,7 +4,7 @@ const { NETWORK } = require(`${basePath}/constants/network.js`);
 
 const network = NETWORK.htr;
 
-// General metadata for Ethereum
+// General metadata for ETH / HTR
 const namePrefix = "Your Collection";
 const description = "Remember to replace this description";
 const baseUri = "ipfs://NewUriToReplace";
